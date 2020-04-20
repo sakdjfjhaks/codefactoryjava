@@ -9,10 +9,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.File;
 import java.io.FileWriter;
-import java.sql.*;
 import java.util.*;
-
-import static com.example.demo.index.GUtils.*;
 
 
 /**
@@ -25,7 +22,6 @@ public class GService {
     private String TEMPLATE_FILE;
     private String PROJECT_PATH;
     private String JAVA_PATH = "/src/main/java/";
-    private Table table;
     private Map<String, Object> model = new HashMap<String, Object>();
 
     public static void main(String[] args) {
@@ -41,14 +37,19 @@ public class GService {
             properties.load(resource.getStream());
 
             String projectName = properties.getProperty("projectName");
+            String annotation = properties.getProperty("annotation");
             TEMPLATE_FILE = properties.getProperty("template.file");
             PROJECT_PATH = properties.getProperty("project.path") == null ? "" : properties.getProperty("project.path");
+
             configuration = new Configuration(Configuration.VERSION_2_3_23);
             String configPath = ClassLoader.getSystemResource("").getPath() + TEMPLATE_FILE;
             configuration.setDirectoryForTemplateLoading(new File(configPath));
             configuration.setDefaultEncoding("UTF-8");
             configuration.setTemplateExceptionHandler(TemplateExceptionHandler.IGNORE_HANDLER);
+
             model.put("projectName", projectName);
+            model.put("annotation", annotation);
+
             getFile();
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
@@ -97,17 +98,6 @@ public class GService {
         /*生成*/
         configuration.getTemplate(template).getCustomLookupCondition();
         String filepath = System.getProperty("user.dir") + PROJECT_PATH;
-        if (template.contains("Mapper")) {
-            if(template.contains("/")){
-                //文件夹
-                String Folder = template.split("/")[0];
-                //文件
-                String file = template.split("/")[1];
-                filepath = filepath  + file.replace(".ftl", "");
-            }else{
-                filepath = filepath  + template.replace(".ftl", "");
-            }
-        } else {
             if(template.contains("/")){
                 //文件夹
                 String Folder = template.split("/")[0];
@@ -118,7 +108,6 @@ public class GService {
                 filepath = filepath + JAVA_PATH  + "/"  + template.replace(".ftl", "");
             }
 
-        }
         File newfile = new File(filepath);
         if (!newfile.getParentFile().exists()) {
             newfile.getParentFile().mkdirs();
