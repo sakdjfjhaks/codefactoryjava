@@ -4,7 +4,7 @@ package com.study.practice.exercises.first;
 * 题目： 古典问题：有一对兔子， 从出生后第 3 个月起每个月都生一对兔子， 小兔子长到第三
 * 个月后每个月又生一对兔子，假如兔子都不死，问每个月的兔子对数为多少？
 */
-public class ${table.tableComment} {
+public class ${projectName} {
 public static void main(String[] args) {
 Integer month = 99;
 System.out.println("第" + month + "个月的对数为： " + num(month));
