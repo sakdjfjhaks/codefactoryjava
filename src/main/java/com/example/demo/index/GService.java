@@ -38,6 +38,10 @@ public class GService {
 
             String projectName = properties.getProperty("projectName");
             String annotation = properties.getProperty("annotation");
+            String package1 = properties.getProperty("package");
+            String className = properties.getProperty("className");
+            String methodName = properties.getProperty("methodName");
+
             TEMPLATE_FILE = properties.getProperty("template.file");
             PROJECT_PATH = properties.getProperty("project.path") == null ? "" : properties.getProperty("project.path");
 
@@ -49,6 +53,9 @@ public class GService {
 
             model.put("projectName", projectName);
             model.put("annotation", annotation);
+            model.put("package", package1);
+            model.put("className", className);
+            model.put("methodName", methodName);
 
             getFile();
         } catch (Exception e) {
