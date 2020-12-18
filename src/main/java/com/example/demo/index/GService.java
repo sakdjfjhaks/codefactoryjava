@@ -22,6 +22,8 @@ public class GService {
     private String TEMPLATE_FILE;
     private String PROJECT_PATH;
     private String JAVA_PATH = "/src/main/java/";
+    private  String className = null;
+    private  String filePath = null;
     private Map<String, Object> model = new HashMap<String, Object>();
 
     public static void main(String[] args) {
@@ -39,7 +41,7 @@ public class GService {
             String projectName = properties.getProperty("projectName");
             String annotation = properties.getProperty("annotation");
             String package1 = properties.getProperty("package");
-            String className = properties.getProperty("className");
+            className = properties.getProperty("className");
             String methodName = properties.getProperty("methodName");
 
             TEMPLATE_FILE = properties.getProperty("template.file");
@@ -54,10 +56,17 @@ public class GService {
             model.put("projectName", projectName);
             model.put("annotation", annotation);
             model.put("package", package1);
-            model.put("className", className);
             model.put("methodName", methodName);
 
-            getFile();
+            for(int i=0;i<100;i++){
+                className = properties.getProperty("className");
+                className = className+i+"test";
+                model.put("className", className);
+                filePath = System.getProperty("user.dir") + PROJECT_PATH;
+                filePath = filePath + JAVA_PATH  + "/"  + className +".java";
+                getFile();
+            }
+
         } catch (Exception e) {
             logger.error(e.getMessage(), e);
         }
@@ -104,26 +113,38 @@ public class GService {
     private void targetFileGenerate(String template) throws Exception {
         /*生成*/
         configuration.getTemplate(template).getCustomLookupCondition();
-        String filepath = System.getProperty("user.dir") + PROJECT_PATH;
-            if(template.contains("/")){
-                //文件夹
-                String Folder = template.split("/")[0];
-                //文件
-                String file = template.split("/")[1];
-                filepath = filepath + JAVA_PATH + "/" + Folder +"/" + file.replace(".ftl", "");
-            }else{
-                filepath = filepath + JAVA_PATH  + "/"  + template.replace(".ftl", "");
-            }
+//        String filepath = System.getProperty("user.dir") + PROJECT_PATH;
+//            if(template.contains("/")){
+//                //文件夹
+//                String Folder = template.split("/")[0];
+//                //文件
+//                String file = template.split("/")[1];
+////                filepath = filepath + JAVA_PATH + "/" + Folder +"/" + file.replace(".ftl", "");
+//                filepath = filepath + JAVA_PATH + "/" + Folder +"/" + className + ".java";
+//            }else{
+////                filepath = filepath + JAVA_PATH  + "/"  + template.replace(".ftl", "");
+//                filepath = filepath + JAVA_PATH  + "/"  + className + ".java";
+//            }
 
-        File newfile = new File(filepath);
-        if (!newfile.getParentFile().exists()) {
-            newfile.getParentFile().mkdirs();
-        }
-        if (newfile.exists()) {
-            newfile.delete();//删除文件
-        }
-        /*先生成后转移*/
-        configuration.getTemplate(template).process(model, new FileWriter(newfile));
+
+                File newfile = new File(filePath);
+                if (!newfile.getParentFile().exists()) {
+                    newfile.getParentFile().mkdirs();
+                }
+                if (newfile.exists()) {
+                    newfile.delete();//删除文件
+                }
+                /*先生成后转移*/
+                configuration.getTemplate(template).process(model, new FileWriter(newfile));
+//        File newfile = new File(filepath);
+//        if (!newfile.getParentFile().exists()) {
+//            newfile.getParentFile().mkdirs();
+//        }
+//        if (newfile.exists()) {
+//            newfile.delete();//删除文件
+//        }
+//        /*先生成后转移*/
+//        configuration.getTemplate(template).process(model, new FileWriter(newfile));
     }
 
 
