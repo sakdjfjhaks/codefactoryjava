@@ -22,6 +22,7 @@ public class GService {
     private String TEMPLATE_FILE;
     private String PROJECT_PATH;
     private String JAVA_PATH = "/src/main/java/";
+    private String className = "/src/main/java/";
     private Map<String, Object> model = new HashMap<String, Object>();
 
     public static void main(String[] args) {
@@ -39,7 +40,7 @@ public class GService {
             String projectName = properties.getProperty("projectName");
             String annotation = properties.getProperty("annotation");
             String package1 = properties.getProperty("package");
-            String className = properties.getProperty("className");
+            className = properties.getProperty("className");
             String methodName = properties.getProperty("methodName");
 
             TEMPLATE_FILE = properties.getProperty("template.file");
@@ -110,9 +111,9 @@ public class GService {
                 String Folder = template.split("/")[0];
                 //文件
                 String file = template.split("/")[1];
-                filepath = filepath + JAVA_PATH + "/" + Folder +"/" + file.replace(".ftl", "");
+                filepath = filepath + JAVA_PATH + "/" + Folder +"/" + className + ".java";
             }else{
-                filepath = filepath + JAVA_PATH  + "/"  + template.replace(".ftl", "");
+                filepath = filepath + JAVA_PATH  + "/"  + className + ".java";
             }
 
         File newfile = new File(filepath);

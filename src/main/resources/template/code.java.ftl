@@ -30,15 +30,10 @@ public class ${className}  {
     }
 
     @Test
-    public void login() throws Exception {
-        driver.findElementByXPath("//*[@text='使用账号密码登录']").click();
-        Thread.sleep(5000);
-
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[1]/android.widget.EditText").sendKeys("17862462918");
-        driver.findElementByXPath("/hierarchy/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.LinearLayout/android.widget.FrameLayout/android.widget.FrameLayout/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup/android.view.ViewGroup[2]/android.view.ViewGroup/android.view.ViewGroup/android.widget.ScrollView/android.view.ViewGroup/android.view.ViewGroup[2]/android.widget.EditText").sendKeys("123456");
-
-        Thread.sleep(2000);
-        driver.findElementByXPath("(//android.view.ViewGroup[@content-desc=\"button-item\"])[1]/android.view.ViewGroup/android.widget.TextView").click();
+    public void run() throws Exception {
+        driver.findElementByAndroidUIAutomator("text(\"我的\")").click();
+        //设置键
+        driver.findElementByAndroidUIAutomator("text(\"\ue685\")").click();
     }
 
     @AfterEach
