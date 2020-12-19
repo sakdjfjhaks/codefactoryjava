@@ -25,11 +25,6 @@ public class GService {
     private String className = "/src/main/java/";
     private Map<String, Object> model = new HashMap<String, Object>();
 
-    public static void main(String[] args) {
-        GService cgm = new GService();
-        cgm.run();
-    }
-
     //1初始化
     public void run() {
         try {
